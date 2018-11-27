@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>猜数字游戏</h1>
+<div class="form">
+    <label for="guessField">请猜数: </label><input type="text" id="guessField" class="guessField">
+    <input type="submit" value="确定" class="guessSubmit">
+</div>
+
+<div class="resultParas">
+    <p class="guesses"></p>
+    <p class="lastResult"></p>
+    <p class="lowOrHi"></p>
+</div>
+<script>
+    var randomNumebr=Math.floor(Math.random()*100)+1;
+    console.log(randomNumebr)
+    var guesses=document.querySelector('.guesses');
+    var lastResult=document.querySelector('.lastResult');
+    var lowOrHi=document.querySelector('.lowOrHi');
+
+    var guessSub=document.querySelector('.guessSubmit');
+    var guessField=document.querySelector('.guessField');
+
+    var guessCount=1;
+    var resetButton;
+
+
+    function fxxkfun() {
+        alert('aifeawgag')
+    }
+
+    function checkGuess() {
+        var userGuess=Number(guessField.value);
+        if(guessCount===1){
+            guesses.textContent='guess last time:';
+        }
+        guesses.textContent+=userGuess+' ';
+        if(userGuess===randomNumebr){
+            lastResult.textContent='correct';
+            lastResult.style.backgroundColor='green';
+            lowOrHi.textContent=' ';
+            setGameOver();
+        }else if(guessCount===10){
+            lastResult.textContent='game over';
+            setGameOver();
+        }else{
+            lastResult.textContent='wrong';
+            lastResult.style.backgroundColor='red';
+            if(userGuess<randomNumebr){
+                lowOrHi.textContent='low';
+            }else{
+                lowOrHi.textContent='hi';
+            }
+        }
+        guessCount++;
+        guessField.value='';
+        guessField.focus();
+
+
+    }
+    guessSub.addEventListener('click',checkGuess);
+
+    function setGameOver() {
+        guessField.disabled = true;
+        guessSub.disabled = true;
+        resetButton = document.createElement('button');
+        resetButton.textContent = 'Start new game';
+        document.body.appendChild(resetButton);
+        resetButton.addEventListener('click', resetGame);
+    }
+    
+    function resetGame() {
+        guessCount = 1;
+
+        var resetParas = document.querySelectorAll('.resultParas p');
+        for (var i = 0 ; i < resetParas.length ; i++) {
+            resetParas[i].textContent = '';
+        }
+
+        resetButton.parentNode.removeChild(resetButton);
+
+        guessField.disabled = false;
+        guessSubmit.disabled = false;
+        guessField.value = '';
+        guessField.focus();
+
+        lastResult.style.backgroundColor = 'white';
+
+        randomNumber = Math.floor(Math.random() * 100) + 1;
+    }
+</script>
+</body>
+</html>
